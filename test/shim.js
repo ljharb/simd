@@ -1,4 +1,5 @@
 var test = require('tape');
+require('./test-shim');
 
 var simd = require('../');
 

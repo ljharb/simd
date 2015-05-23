@@ -1,4 +1,5 @@
 var test = require('tape');
+require('./test-shim');
 
 var original = global.SIMD && Object.freeze ? Object.freeze(global.SIMD) : global.SIMD;
 var SIMD = require('../');
