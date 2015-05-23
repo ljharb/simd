@@ -1,0 +1,58 @@
+{
+	"name": "simd",
+	"version": "0.0.0",
+	"author": "Jordan Harband",
+	"description": "SIMD polyfill",
+	"license": "(MIT OR Zlib)",
+	"main": "index.js",
+	"scripts": {
+		"install:simd": "napa johnmccutchan/ecmascript_simd && npm run transform",
+		"transform": "npm run shim:transform && npm run test:transform",
+		"shim:transform": "cp node_modules/ecmascript_simd/src/ecmascript_simd.js simd.js && replace '.*module\\.exports.*' '' simd.js && replace '\\(function\\(global\\) {' 'module.exports = function (global) {' simd.js && replace '}\\)\\(typeof window !== \"undefined\" \\? window : this\\);' '};' simd.js",
+		"test:wrap": "echo \"module.exports = function (test, SIMD) {\n$(cat \"node_modules/ecmascript_simd/src/ecmascript_simd_tests.js\")\n};\" > test/simd.js",
+		"test:transform": "npm run test:wrap && replace '(test\\([^,]+, ?function ?\\()' '$1t_' test/simd.js && replace '(throws\\()' \"t_['throws'](\" test/simd.js && replace '(\\s+)(equal|notEqual|ok)\\(' '$1t_.$2(' test/simd.js && replace '(isNaN|almostEqual|isPositiveZero|isNegativeZero)\\(' '$1(t_, ' test/simd.js && replace '(^}\\);)' ' t_.end();\n$1' test/simd.js",
+		"test": "node test/index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ljharb/simd.git"
+	},
+	"bugs": {
+		"url": "https://github.com/ljharb/simd/issues"
+	},
+	"keywords": [
+		"simd",
+		"ES7",
+		"ES2016",
+		"128-bit",
+		"single instruction multiple data"
+	],
+	"homepage": "https://github.com/ljharb/simd#readme",
+	"dependencies": {},
+	"devDependencies": {
+		"napa": "^1.2.0",
+		"replace": "^0.3.0",
+		"tape": "^4.0.0"
+	},
+	"testling": {
+		"files": "test/index.js",
+		"browsers": [
+			"iexplore/6.0..latest",
+			"firefox/3.0..6.0",
+			"firefox/15.0..latest",
+			"firefox/nightly",
+			"chrome/4.0..10.0",
+			"chrome/20.0..latest",
+			"chrome/canary",
+			"opera/10.0..latest",
+			"opera/next",
+			"safari/4.0..latest",
+			"ipad/6.0..latest",
+			"iphone/6.0..latest",
+			"android-browser/4.2"
+		]
+	},
+	"engines": {
+		"node": ">= 0.4"
+	}
+}
