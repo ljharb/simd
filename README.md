@@ -9,6 +9,9 @@ Nearly every word of this README and line of code and tests are taken directly f
 The purpose of this is to make it a require-able module, that does not automatically modify the global environment,
 for use in the [es7-shim](https://github.com/es-shims/es7-shim).
 
+## Requirements
+The SIMD polyfill requires Typed Arrays to be present in the engine. A Typed Array polyfill can be found [here](https://www.npmjs.com/package/typedarray) - source is from [here](https://github.com/inexorabletash/polyfill/blob/master/typedarray.js).
+
 ## Usage:
 ```js
 var SIMD = require('simd');
