@@ -34,7 +34,7 @@
 	],
 	"homepage": "https://github.com/ljharb/simd#readme",
 	"dependencies": {
-		"define-properties": "^1.0.1"
+		"define-properties": "^1.0.2"
 	},
 	"devDependencies": {
 		"napa": "^1.2.0",
@@ -47,7 +47,10 @@
 		"typedarray": "^0.0.6"
 	},
 	"testling": {
-		"files": ["test/index.js", "test/shim.js"],
+		"files": [
+			"test/index.js",
+			"test/shim.js"
+		],
 		"browsers": [
 			"iexplore/6.0..latest",
 			"firefox/3.0..6.0",
