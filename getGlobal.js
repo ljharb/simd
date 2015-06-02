@@ -1,3 +1,5 @@
+/*global window, global, self */
+
 module.exports = function getGlobal() {
 	if (typeof window !== 'undefined') { return window; }
 	if (typeof global !== 'undefined') { return global; }
