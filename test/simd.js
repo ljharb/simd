@@ -998,6 +998,9 @@ test('float32x4 store', function(t_) {
   for (var i = 0; i < a.length; i++) {
     t_.equal(i, a[i]);
   }
+
+  var v = SIMD.float32x4(0, 1, 2, 3);
+  t_.equal(true, SIMD.int32x4.allTrue(SIMD.float32x4.equal(SIMD.float32x4.store(a, 0, v), v)));
  t_.end();
 });
 
@@ -1042,6 +1045,9 @@ test('float32x4 store1', function(t_) {
   for (var i = 0; i < a.length; i++) {
     t_.equal(i, a[i]);
   }
+
+  var v = SIMD.float32x4(0, 1, 2, 3);
+  t_.equal(true, SIMD.int32x4.allTrue(SIMD.float32x4.equal(SIMD.float32x4.store1(a, 0, v), v)));
  t_.end();
 });
 
@@ -1092,6 +1098,9 @@ test('float32x4 store2', function(t_) {
   for (var i = 0; i < a.length; i++) {
     t_.equal(i, a[i]);
   }
+
+  var v = SIMD.float32x4(0, 1, 2, 3);
+  t_.equal(true, SIMD.int32x4.allTrue(SIMD.float32x4.equal(SIMD.float32x4.store2(a, 0, v), v)));
  t_.end();
 });
 
@@ -1137,6 +1146,9 @@ test('float32x4 store3', function(t_) {
   for (var i = 0; i < a.length; i++) {
     t_.equal(i, a[i]);
   }
+
+  var v = SIMD.float32x4(0, 1, 2, 3);
+  t_.equal(true, SIMD.int32x4.allTrue(SIMD.float32x4.equal(SIMD.float32x4.store3(a, 0, v), v)));
  t_.end();
 });
 
@@ -1995,6 +2007,9 @@ test('float64x2 store', function(t_) {
   for (var i = 0; i < a.length; i++) {
     t_.equal(i, a[i]);
   }
+
+  var v = SIMD.float64x2(0, 1);
+  t_.equal(true, SIMD.int64x2.allTrue(SIMD.float64x2.equal(SIMD.float64x2.store(a, 0, v), v)));
  t_.end();
 });
 
@@ -2026,6 +2041,9 @@ test('float64x2 store1', function(t_) {
   for (var i = 0; i < a.length; i++) {
     t_.equal(i, a[i]);
   }
+
+  var v = SIMD.float64x2(0, 1);
+  t_.equal(true, SIMD.int64x2.allTrue(SIMD.float64x2.equal(SIMD.float64x2.store1(a, 0, v), v)));
  t_.end();
 });
 
@@ -3286,6 +3304,9 @@ test('int32x4 store', function(t_) {
   for (var i = 0; i < a.length; i++) {
     t_.equal(i, a[i]);
   }
+
+  var v = SIMD.int32x4(0, 1, 2, 3);
+  t_.equal(true, SIMD.int32x4.allTrue(SIMD.int32x4.equal(SIMD.int32x4.store(a, 0, v), v)));
  t_.end();
 });
 
@@ -3330,6 +3351,9 @@ test('int32x4 store1', function(t_) {
   for (var i = 0; i < a.length; i++) {
     t_.equal(i, a[i]);
   }
+
+  var v = SIMD.int32x4(0, 1, 2, 3);
+  t_.equal(true, SIMD.int32x4.allTrue(SIMD.int32x4.equal(SIMD.int32x4.store1(a, 0, v), v)));
  t_.end();
 });
 
@@ -3368,6 +3392,9 @@ test('int32x4 unaligned store1', function(t_) {
   for (var i = 0; i < a.length; i++) {
     t_.equal(i, a[i]);
   }
+
+  var v = SIMD.int32x4(0, 1, 2, 3);
+  t_.equal(true, SIMD.int32x4.allTrue(SIMD.int32x4.equal(SIMD.int32x4.store2(a, 0, v), v)));
  t_.end();
 });
 
@@ -3424,6 +3451,9 @@ test('int32x4 store3', function(t_) {
   for (var i = 0; i < a.length; i++) {
     t_.equal(i, a[i]);
   }
+
+  var v = SIMD.int32x4(0, 1, 2, 3);
+  t_.equal(true, SIMD.int32x4.allTrue(SIMD.int32x4.equal(SIMD.int32x4.store3(a, 0, v), v)));
  t_.end();
 });
 
