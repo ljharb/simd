@@ -39,32 +39,178 @@ function toBool(x) {
   return x < 0;
 }
 
-test('odds and ends', function(t_) {
-    // Not yet specified:
-    //   ==, ===, !=, !==, <=, >=
-    //   conversion to bool via !, ?, etc.:
-    isNaN(t_, Number(SIMD.float32x4(0, 1, 2, 3)));
-    isNaN(t_, +SIMD.float32x4(0, 1, 2, 3));
-    isNaN(t_, -SIMD.float32x4(0, 1, 2, 3));
-    t_.equal(~SIMD.float32x4(0, 1, 2, 3), -1);
-    isNaN(t_, Math.fround(SIMD.float32x4(0, 1, 2, 3)));
-    t_.equal(SIMD.float32x4(0, 1, 2, 3)|0, 0);
-    t_.equal(SIMD.float32x4(0, 1, 2, 3)&0, 0);
-    t_.equal(SIMD.float32x4(0, 1, 2, 3)^0, 0);
-    t_.equal(SIMD.float32x4(0, 1, 2, 3)>>>0, 0);
-    t_.equal(SIMD.float32x4(0, 1, 2, 3)>>0, 0);
-    t_.equal(SIMD.float32x4(0, 1, 2, 3)<<0, 0);
-    t_.equal(typeof (SIMD.float32x4(0, 1, 2, 3) + SIMD.float32x4(4, 5, 6, 7)), "string");
-    isNaN(t_, SIMD.float32x4(0, 1, 2, 3) - SIMD.float32x4(4, 5, 6, 7));
-    isNaN(t_, SIMD.float32x4(0, 1, 2, 3) * SIMD.float32x4(4, 5, 6, 7));
-    isNaN(t_, SIMD.float32x4(0, 1, 2, 3) / SIMD.float32x4(4, 5, 6, 7));
-    isNaN(t_, SIMD.float32x4(0, 1, 2, 3) % SIMD.float32x4(4, 5, 6, 7));
-    t_.equal(SIMD.float32x4(0, 1, 2, 3) < SIMD.float32x4(4, 5, 6, 7), false);
-    t_.equal(SIMD.float32x4(0, 1, 2, 3) > SIMD.float32x4(4, 5, 6, 7), false);
-    t_.equal(typeof (SIMD.float32x4(0, 1, 2, 3).toString()), "string");
+test('float32x4 operators', function(t_) {
+    // Not possible to implement properly in polyfill:
+    //   ==, ===, !=, !==
+    t_['throws'](function() {Number(SIMD.float32x4(0, 1, 2, 3))});
+    t_['throws'](function() {+SIMD.float32x4(0, 1, 2, 3)});
+    t_['throws'](function() {-SIMD.float32x4(0, 1, 2, 3)});
+    t_['throws'](function() {~SIMD.float32x4(0, 1, 2, 3), -1});
+    t_['throws'](function() {Math.fround(SIMD.float32x4(0, 1, 2, 3))});
+    t_['throws'](function() {SIMD.float32x4(0, 1, 2, 3)|0});
+    t_['throws'](function() {SIMD.float32x4(0, 1, 2, 3)&0});
+    t_['throws'](function() {SIMD.float32x4(0, 1, 2, 3)^0});
+    t_['throws'](function() {SIMD.float32x4(0, 1, 2, 3)>>>0});
+    t_['throws'](function() {SIMD.float32x4(0, 1, 2, 3)>>0});
+    t_['throws'](function() {SIMD.float32x4(0, 1, 2, 3)<<0});
+    t_['throws'](function() {(SIMD.float32x4(0, 1, 2, 3) + SIMD.float32x4(4, 5, 6, 7))});
+    t_['throws'](function() {SIMD.float32x4(0, 1, 2, 3) - SIMD.float32x4(4, 5, 6, 7)});
+    t_['throws'](function() {SIMD.float32x4(0, 1, 2, 3) * SIMD.float32x4(4, 5, 6, 7)});
+    t_['throws'](function() {SIMD.float32x4(0, 1, 2, 3) / SIMD.float32x4(4, 5, 6, 7)});
+    t_['throws'](function() {SIMD.float32x4(0, 1, 2, 3) % SIMD.float32x4(4, 5, 6, 7)});
+    t_['throws'](function() {SIMD.float32x4(0, 1, 2, 3) < SIMD.float32x4(4, 5, 6, 7)});
+    t_['throws'](function() {SIMD.float32x4(0, 1, 2, 3) > SIMD.float32x4(4, 5, 6, 7)});
+    t_['throws'](function() {SIMD.float32x4(0, 1, 2, 3) <= SIMD.float32x4(4, 5, 6, 7)});
+    t_['throws'](function() {SIMD.float32x4(0, 1, 2, 3) >= SIMD.float32x4(4, 5, 6, 7)});
+    t_.equal(SIMD.float32x4(0, 1, 2, 3).toString(), "float32x4(0, 1, 2, 3)");
+    t_.equal(SIMD.float32x4(0, 1, 2, 3).toLocaleString(), "float32x4(0, 1, 2, 3)");
     t_['throws'](function() { SIMD.float32x4(0, 1, 2, 3)(); });
     t_.equal(SIMD.float32x4(0, 1, 2, 3)[0], undefined);
     t_.equal(SIMD.float32x4(0, 1, 2, 3).a, undefined);
+    t_.equal(!SIMD.float32x4(0, 1, 2, 3), false);
+    t_.equal(!SIMD.float32x4(0, 0, 0, 0), false);
+    t_.equal(SIMD.float32x4(0, 1, 2, 3) ? 1 : 2, 1);
+    t_.equal(SIMD.float32x4(0, 0, 0, 0) ? 1 : 2, 1);
+ t_.end();
+});
+
+test('int32x4 operators', function(t_) {
+    // Not possible to implement properly in polyfill:
+    //   ==, ===, !=, !==
+    t_['throws'](function() {Number(SIMD.int32x4(0, 1, 2, 3))});
+    t_['throws'](function() {+SIMD.int32x4(0, 1, 2, 3)});
+    t_['throws'](function() {-SIMD.int32x4(0, 1, 2, 3)});
+    t_['throws'](function() {~SIMD.int32x4(0, 1, 2, 3), -1});
+    t_['throws'](function() {Math.fround(SIMD.int32x4(0, 1, 2, 3))});
+    t_['throws'](function() {SIMD.int32x4(0, 1, 2, 3)|0});
+    t_['throws'](function() {SIMD.int32x4(0, 1, 2, 3)&0});
+    t_['throws'](function() {SIMD.int32x4(0, 1, 2, 3)^0});
+    t_['throws'](function() {SIMD.int32x4(0, 1, 2, 3)>>>0});
+    t_['throws'](function() {SIMD.int32x4(0, 1, 2, 3)>>0});
+    t_['throws'](function() {SIMD.int32x4(0, 1, 2, 3)<<0});
+    t_['throws'](function() {(SIMD.int32x4(0, 1, 2, 3) + SIMD.int32x4(4, 5, 6, 7))});
+    t_['throws'](function() {SIMD.int32x4(0, 1, 2, 3) - SIMD.int32x4(4, 5, 6, 7)});
+    t_['throws'](function() {SIMD.int32x4(0, 1, 2, 3) * SIMD.int32x4(4, 5, 6, 7)});
+    t_['throws'](function() {SIMD.int32x4(0, 1, 2, 3) / SIMD.int32x4(4, 5, 6, 7)});
+    t_['throws'](function() {SIMD.int32x4(0, 1, 2, 3) % SIMD.int32x4(4, 5, 6, 7)});
+    t_['throws'](function() {SIMD.int32x4(0, 1, 2, 3) < SIMD.int32x4(4, 5, 6, 7)});
+    t_['throws'](function() {SIMD.int32x4(0, 1, 2, 3) > SIMD.int32x4(4, 5, 6, 7)});
+    t_['throws'](function() {SIMD.int32x4(0, 1, 2, 3) <= SIMD.int32x4(4, 5, 6, 7)});
+    t_['throws'](function() {SIMD.int32x4(0, 1, 2, 3) >= SIMD.int32x4(4, 5, 6, 7)});
+    t_.equal(SIMD.int32x4(0, 1, 2, 3).toString(), "int32x4(0, 1, 2, 3)");
+    t_.equal(SIMD.int32x4(0, 1, 2, 3).toLocaleString(), "int32x4(0, 1, 2, 3)");
+    t_['throws'](function() { SIMD.int32x4(0, 1, 2, 3)(); });
+    t_.equal(SIMD.int32x4(0, 1, 2, 3)[0], undefined);
+    t_.equal(SIMD.int32x4(0, 1, 2, 3).a, undefined);
+    t_.equal(!SIMD.int32x4(0, 1, 2, 3), false);
+    t_.equal(!SIMD.int32x4(0, 0, 0, 0), false);
+    t_.equal(SIMD.int32x4(0, 1, 2, 3) ? 1 : 2, 1);
+    t_.equal(SIMD.int32x4(0, 0, 0, 0) ? 1 : 2, 1);
+ t_.end();
+});
+
+test('float64x2 operators', function(t_) {
+    // Not possible to implement properly in polyfill:
+    //   ==, ===, !=, !==
+    t_['throws'](function() {Number(SIMD.float64x2(0, 1))});
+    t_['throws'](function() {+SIMD.float64x2(0, 1)});
+    t_['throws'](function() {-SIMD.float64x2(0, 1)});
+    t_['throws'](function() {~SIMD.float64x2(0, 1), -1});
+    t_['throws'](function() {Math.fround(SIMD.float64x2(0, 1))});
+    t_['throws'](function() {SIMD.float64x2(0, 1)|0});
+    t_['throws'](function() {SIMD.float64x2(0, 1)&0});
+    t_['throws'](function() {SIMD.float64x2(0, 1)^0});
+    t_['throws'](function() {SIMD.float64x2(0, 1)>>>0});
+    t_['throws'](function() {SIMD.float64x2(0, 1)>>0});
+    t_['throws'](function() {SIMD.float64x2(0, 1)<<0});
+    t_['throws'](function() {(SIMD.float64x2(0, 1) + SIMD.float64x2(0, 1))});
+    t_['throws'](function() {SIMD.float64x2(0, 1) - SIMD.float64x2(0, 1)});
+    t_['throws'](function() {SIMD.float64x2(0, 1) * SIMD.float64x2(0, 1)});
+    t_['throws'](function() {SIMD.float64x2(0, 1) / SIMD.float64x2(0, 1)});
+    t_['throws'](function() {SIMD.float64x2(0, 1) % SIMD.float64x2(0, 1)});
+    t_['throws'](function() {SIMD.float64x2(0, 1) < SIMD.float64x2(0, 1)});
+    t_['throws'](function() {SIMD.float64x2(0, 1) > SIMD.float64x2(0, 1)});
+    t_['throws'](function() {SIMD.float64x2(0, 1) <= SIMD.float64x2(0, 1)});
+    t_['throws'](function() {SIMD.float64x2(0, 1) >= SIMD.float64x2(0, 1)});
+    t_.equal(SIMD.float64x2(0, 1).toString(), "float64x2(0, 1)");
+    t_.equal(SIMD.float64x2(0, 1).toLocaleString(), "float64x2(0, 1)");
+    t_['throws'](function() { SIMD.float64x2(0, 1)(); });
+    t_.equal(SIMD.float64x2(0, 1)[0], undefined);
+    t_.equal(SIMD.float64x2(0, 1).a, undefined);
+    t_.equal(!SIMD.float64x2(0, 1), false);
+    t_.equal(!SIMD.float64x2(0, 1), false);
+    t_.equal(SIMD.float64x2(0, 1) ? 1 : 2, 1);
+    t_.equal(SIMD.float64x2(0, 1) ? 1 : 2, 1);
+ t_.end();
+});
+
+test('int8x16 operators', function(t_) {
+    // Not possible to implement properly in polyfill:
+    //   ==, ===, !=, !==
+    t_['throws'](function() {Number(SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15))});
+    t_['throws'](function() {+SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)});
+    t_['throws'](function() {-SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)});
+    t_['throws'](function() {~SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15), -1});
+    t_['throws'](function() {Math.fround(SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15))});
+    t_['throws'](function() {SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)|0});
+    t_['throws'](function() {SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)&0});
+    t_['throws'](function() {SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)^0});
+    t_['throws'](function() {SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)>>>0});
+    t_['throws'](function() {SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)>>0});
+    t_['throws'](function() {SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)<<0});
+    t_['throws'](function() {(SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15) + SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15))});
+    t_['throws'](function() {SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15) - SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)});
+    t_['throws'](function() {SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15) * SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)});
+    t_['throws'](function() {SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15) / SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)});
+    t_['throws'](function() {SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15) % SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)});
+    t_['throws'](function() {SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15) < SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)});
+    t_['throws'](function() {SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15) > SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)});
+    t_['throws'](function() {SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15) <= SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)});
+    t_['throws'](function() {SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15) >= SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)});
+    t_.equal(SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15).toString(), "int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)");
+    t_.equal(SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15).toLocaleString(), "int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)");
+    t_['throws'](function() { SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)(); });
+    t_.equal(SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)[0], undefined);
+    t_.equal(SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15).a, undefined);
+    t_.equal(!SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15), false);
+    t_.equal(!SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15), false);
+    t_.equal(SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15) ? 1 : 2, 1);
+    t_.equal(SIMD.int8x16(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15) ? 1 : 2, 1);
+ t_.end();
+});
+
+test('int16x8 operators', function(t_) {
+    // Not possible to implement properly in polyfill:
+    //   ==, ===, !=, !==
+    t_['throws'](function() {Number(SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7))});
+    t_['throws'](function() {+SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7)});
+    t_['throws'](function() {-SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7)});
+    t_['throws'](function() {~SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7), -1});
+    t_['throws'](function() {Math.fround(SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7))});
+    t_['throws'](function() {SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7)|0});
+    t_['throws'](function() {SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7)&0});
+    t_['throws'](function() {SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7)^0});
+    t_['throws'](function() {SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7)>>>0});
+    t_['throws'](function() {SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7)>>0});
+    t_['throws'](function() {SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7)<<0});
+    t_['throws'](function() {(SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7) + SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7))});
+    t_['throws'](function() {SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7) - SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7)});
+    t_['throws'](function() {SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7) * SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7)});
+    t_['throws'](function() {SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7) / SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7)});
+    t_['throws'](function() {SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7) % SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7)});
+    t_['throws'](function() {SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7) < SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7)});
+    t_['throws'](function() {SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7) > SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7)});
+    t_['throws'](function() {SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7) <= SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7)});
+    t_['throws'](function() {SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7) >= SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7)});
+    t_.equal(SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7).toString(), "int16x8(0, 1, 2, 3, 4, 5, 6, 7)");
+    t_.equal(SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7).toLocaleString(), "int16x8(0, 1, 2, 3, 4, 5, 6, 7)");
+    t_['throws'](function() { SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7)(); });
+    t_.equal(SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7)[0], undefined);
+    t_.equal(SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7).a, undefined);
+    t_.equal(!SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7), false);
+    t_.equal(!SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7), false);
+    t_.equal(SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7) ? 1 : 2, 1);
+    t_.equal(SIMD.int16x8(0, 1, 2, 3, 4, 5, 6, 7) ? 1 : 2, 1);
  t_.end();
 });
 
