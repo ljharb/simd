@@ -1,4 +1,4 @@
-/*global SIMD */
+/* global SIMD */
 
 var test = require('tape');
 require('./test-shim');
